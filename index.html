@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+<meta charset="UTF-8">
+<title>zahra</title> 
+<style>
+    /* General body styling with animated gradient background */
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Arial', sans-serif; /* Changed font to Arial for broader compatibility */
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        /* Animated gradient background */
+        background: linear-gradient(200deg, #fbc2eb, #a6c1ee, #87d8e0, #8fdbb0, #fddb92);
+        background-size: 600% 600%;
+        animation: gradientBG 18s ease infinite;
+        overflow: hidden; /* Hide scrollbars that might appear due to animations */
+    }
+
+    /* Keyframes for the animated gradient background */
+    @keyframes gradientBG {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+
+    /* Container for the birthday card elements */
+    .container {
+        position: relative;
+        width: 90%;
+        max-width: 1000px;
+        aspect-ratio: 16/9; /* Default aspect ratio */
+        overflow: hidden;
+        border-radius: 25px;
+        box-shadow: 0 0 40px rgba(0,0,0,0.4);
+        background: rgba(255,255,255,0.15); /* Semi-transparent white background */
+        backdrop-filter: blur(8px); /* Frosted glass effect */
+        border: 1px solid rgba(255,255,255,0.2); /* Subtle border */
+    }
+
+    /* Grid for displaying photos */
+    .photos {
+        width: 100%;
+        height: 100%;
+        display: grid;
+        grid-template-columns: repeat(5, 1fr); /* 5 columns for desktop */
+        grid-template-rows: repeat(2, 1fr);    /* 2 rows for desktop */
+        gap: 10px;
+        padding: 10px;
+        box-sizing: border-box;
+        position: relative;
+        z-index: 1; /* Default z-index for photos */
+    }
+
+    /* Styling for individual images */
+    .photos img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* Ensures images cover the area without distortion */
+        filter: blur(1.5px) brightness(0.95); /* Slight blur and brightness adjustment */
+        border-radius: 16px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        transition: transform 0.3s ease, filter 0.3s ease, z-index 0s linear 0.3s; /* Smooth transition for zoom effect */
+        position: relative;
+        z-index: 1; /* Default z-index for images */
+    }
+
+    /* Styling for the birthday message text */
+    .text {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        color: #fff; /* White text color */
+        font-size: 3.8rem; /* Large font size for the message */
+        font-weight: 900; /* Bold font weight */
+        text-shadow: 0 0 30px rgba(0,0,0,1), 0 0 10px rgba(255,255,255,0.5); /* Text shadow for better readability */
+        background: rgba(0,0,0,0.3); /* Semi-transparent dark background for text */
+        border-radius: 25px;
+        pointer-events: none; /* Allows clicks to pass through to elements underneath */
+        z-index: 20; /* Increased z-index to ensure it's always on top of images */
+    }
+
+    /* Responsive adjustments for mobile devices */
+    @media (max-width: 768px) {
+        .container {
+            width: 95%;
+            aspect-ratio: 1/1; /* Make container square on smaller screens */
+        }
+        .photos {
+            grid-template-columns: repeat(3, 1fr); /* 3 columns on mobile */
+            grid-template-rows: repeat(4, 1fr);    /* Adjusted rows for 3 columns */
+            gap: 8px;
+            padding: 8px;
+        }
+        .text {
+            font-size: 2.5rem; /* Smaller font size for text on mobile */
+        }
+        .photos img {
+            border-radius: 12px; /* Slightly smaller radius for mobile images */
+        }
+    }
+
+    /* Zoom effect on hover/touch */
+    .photos img:hover, .photos img:active { /* :active for touch devices */
+        transform: scale(1.1); /* Zoom effect */
+        z-index: 10; /* Ensure zoomed image is on top */
+        filter: blur(0px) brightness(1.0); /* Remove blur and adjust brightness on zoom */
+        transition: transform 0.3s ease, filter 0.3s ease, z-index 0s; /* Adjust transition timing for immediacy */
+    }
+
+</style>
+</head>
+
+<body>
+
+<!-- The main container for the birthday card -->
+<div class="container">
+    <!-- Grid container for photos -->
+    <div class="photos">
+         <!-- IMPORTANT: Replace these file paths with actual URLs or relative paths to your images -->
+         <!-- Example using local files (will only work on your machine): -->
+        <img src="./1.jpeg" alt="Birthday Photo 1">
+        <img src="./2.jpeg" alt="Birthday Photo 2">
+        <img src="./3.jpeg" alt="Birthday Photo 3">
+        <img src="./4.jpeg" alt="Birthday Photo 4">
+        <img src="./5.jpeg" alt="Birthday Photo 5">
+        <img src="./6.jpeg" alt="Birthday Photo 6">
+        <img src="./7.jpeg" alt="Birthday Photo 7">
+        <img src="./8.jpeg" alt="Birthday Photo 8">
+        <img src="./9.jpeg" alt="Birthday Photo 9">
+        <img src="./10.jpeg" alt="Birthday Photo 10">
+    </div>
+    <!-- Birthday message text -->
+    <div class="text"> تولدت مبارک </div>
+</div>
+
+<!-- Audio element for the background music -->
+<!-- IMPORTANT: Replace the src with a publicly accessible URL for the song -->
+<audio id="player" src="./tavalod_z_cut.mp3"></audio>
+<!--اهنگگگگ-->
+<script>
+    const audio = document.getElementById('player');
+    const container = document.querySelector('.container');
+    const images = document.querySelectorAll('.photos img');
+    let hasInteracted = false; // Flag to track user interaction
+
+    // Function to attempt playing audio
+    function playAudio() {
+        if (!hasInteracted) {
+            hasInteracted = true; // Set flag to true on first interaction
+            if (audio.paused) {
+                audio.play().then(() => {
+                    console.log("Audio started playing.");
+                }).catch(error => {
+                    console.error("Audio playback failed: ", error);
+                    // Handle cases where autoplay is blocked by the browser
+                    // You might want to show a play button if this happens frequently
+                });
+            }
+        }
+    }
+
+    // Add event listeners for playing audio on first interaction
+    // Listen to clicks on the container for desktop users
+    container.addEventListener('click', playAudio, { once: true });
+
+    // Listen to touchstart events on the body for mobile users
+    document.body.addEventListener('touchstart', playAudio, { once: true });
+
+    // Add hover/active effects for zoom on images
+    images.forEach(img => {
+        // Desktop hover effect
+        img.addEventListener('mouseover', () => {
+            if (!img.contains(event.relatedTarget)) { // Prevent effect when moving between child elements
+                img.style.transform = 'scale(1.1)';
+                img.style.filter = 'blur(0px) brightness(1.0)';
+                img.style.zIndex = '10';
+            }
+        });
+        img.addEventListener('mouseout', () => {
+            img.style.transform = 'scale(1)';
+            img.style.filter = 'blur(1.5px) brightness(0.95)'; // Reset to original filter
+            img.style.zIndex = '1'; // Reset z-index
+        });
+
+        // Mobile touch effect
+        img.addEventListener('touchstart', (e) => {
+            e.preventDefault(); // Prevent default touch behavior like scrolling while zooming
+            img.style.transform = 'scale(1.1)';
+            img.style.filter = 'blur(0px) brightness(1.0)';
+            img.style.zIndex = '10'; // Zoomed image is on top of other images
+            playAudio(); // Also attempt to play audio on first image touch
+        }, { passive: false }); // Need passive: false to allow preventDefault
+
+        img.addEventListener('touchend', () => {
+            img.style.transform = 'scale(1)';
+            img.style.filter = 'blur(1.5px) brightness(0.95)'; // Reset to original filter
+            img.style.zIndex = '1'; // Reset z-index
+        });
+    });
+    
+</script>
+
+
+</html>
